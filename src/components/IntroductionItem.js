@@ -49,39 +49,44 @@
        }
        return (
          <View style={[styles.introInfoStyle, this.props.introInfoStyle]}>
-          <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.introInfo.mainTitle}</Text>
-          <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.introInfo.info}</Text>
-          <View style={[styles.imageslistStyle, this.props.imageslistStyle]}>
-            {this.props.introInfo.detailImages.map((image, i) => {
-               if (i < this.props.detailImagesNum - 1) {
-                 return <Image
-                   key={image + i}
-                   style={[styles.introImageStyle,  this.props.introImageStyle]}
-                   source={{uri: image}} />
-               }
-               if (i === this.props.detailImagesNum - 1) {
-                 if (this.props.introInfo.detailImages.length > this.props.detailImagesNum) {
-                   return (
-                     this.props.ellipsesImageUrl ?
-                     <Image
-                       key={image + i}
-                       style={[styles.introImageStyle,  this.props.introImageStyle]}
-                       source={{uri: this.props.ellipsesImageUrl}}/>
-                     :
-                     <Image
-                       key={image + i}
-                       style={[styles.introImageStyle,  this.props.introImageStyle]}
-                       source={require('../images/ellipses.png')}/>
-                   );
-                 } else {
+          {this.props.introInfo.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.introInfo.mainTitle}</Text> : null}
+          {this.props.introInfo.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.introInfo.info}</Text> : null}
+          {this.props.introInfo.detailImages ?
+            <View style={[styles.imageslistStyle, this.props.imageslistStyle]}>
+              {this.props.introInfo.detailImages.map((image, i) => {
+                 if (i < this.props.detailImagesNum - 1) {
                    return <Image
-                    key={image + i}
-                    style={[styles.introImageStyle,  this.props.introImageStyle]}
-                    source={{uri: image}}/>
+                     key={image + i}
+                     style={[styles.introImageStyle,  this.props.introImageStyle]}
+                     source={{uri: image}} />
                  }
-               }
-             })}
-          </View>
+                 if (i === this.props.detailImagesNum - 1) {
+                   if (this.props.introInfo.detailImages.length > this.props.detailImagesNum) {
+                     return (
+                       this.props.ellipsesImageUrl ?
+                       <Image
+                         key={image + i}
+                         style={[styles.introImageStyle,  this.props.introImageStyle]}
+                         source={{uri: this.props.ellipsesImageUrl}}/>
+                       :
+                       <Image
+                         key={image + i}
+                         style={[styles.introImageStyle,  this.props.introImageStyle]}
+                         source={require('../images/ellipses.png')}/>
+                     );
+                   } else {
+                     return <Image
+                      key={image + i}
+                      style={[styles.introImageStyle,  this.props.introImageStyle]}
+                      source={{uri: image}}/>
+                   }
+                 }
+               })}
+            </View>
+            :
+            null
+          }
+
          </View>
        );
      }

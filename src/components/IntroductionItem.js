@@ -13,6 +13,7 @@
    Image,
  } from 'react-native';
  import PropTypes from 'prop-types';
+ import Icon from 'react-native-vector-icons/FontAwesome'
 
  import Avatar from 'react-native-avatar';
 
@@ -69,10 +70,7 @@
                          style={[styles.introImageStyle,  this.props.introImageStyle]}
                          source={{uri: this.props.ellipsesImageUrl}}/>
                        :
-                       <Image
-                         key={image + i}
-                         style={[styles.introImageStyle,  this.props.introImageStyle]}
-                         source={require('../images/ellipses.png')}/>
+                        <Icon name="ellipsis-h" size={22} color="#666"/>
                      );
                    } else {
                      return <Image
@@ -93,13 +91,6 @@
      return null;
    }
 
-// source={this.props.introInfo.detailImages.length > this.props.detailImagesNum ? this.props.ellipsesImage : {uri: image}}
-
-  //  {this.props.introInfo.detailImages ?
-  //    {this.props.introInfo.detailImages.map((image, i) => {
-  //      <Text>i</Text>
-  //    })}
-  //    : null}
    renderDivide() {
      if (this.props.bottomInfo) {
        return <View style={styles.divideStyle}/>;

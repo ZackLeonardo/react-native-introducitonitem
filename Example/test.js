@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 
-import Introducitonitem from 'react-native-introducitonitem';
+import Introducitonitem from '@zdy/react-native-introducitonitem';
 
 export default class Test extends React.Component {
   render() {

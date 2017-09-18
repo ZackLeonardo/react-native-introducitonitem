@@ -15,7 +15,7 @@
  import PropTypes from 'prop-types';
  import Icon from 'react-native-vector-icons/FontAwesome'
 
- import Avatar from 'react-native-avatar';
+ import Avatar from '@zdy/react-native-avatar';
 
  class IntroductionItem extends Component{
    render(){

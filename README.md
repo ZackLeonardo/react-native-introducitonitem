@@ -6,7 +6,11 @@ The component which show simple introduction information, which can be used in f
 ## Usage
  (for myself in private npm store)
 ```
-yarn add react-native-introducitonitem
+yarn add @zdy/react-native-introducitonitem
+```
+(for everyone)
+```
+yarn add file:/...path.../react-native-introducitonitem
 ```
 
 ## Example

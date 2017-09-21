@@ -13,7 +13,7 @@
    Image,
  } from 'react-native';
  import PropTypes from 'prop-types';
- import Icon from 'react-native-vector-icons/FontAwesome'
+ import Icon from 'react-native-vector-icons/FontAwesome';
 
  import Avatar from '@zdy/react-native-avatar';
 
@@ -93,7 +93,7 @@
 
    renderDivide() {
      if (this.props.bottomInfo) {
-       return <View style={styles.divideStyle}/>;
+       return <View style={[styles.divideStyle, this.props.divideStyle]}/>;
      }
      return null;
    }
@@ -158,7 +158,7 @@
    },
    infoStyle: {
      fontSize: 12,
-     fontWeight: '600',
+     fontWeight: 'normal',
      textAlign: 'left',
      backgroundColor: 'transparent',
      color: 'black',
@@ -186,7 +186,7 @@
      marginLeft: 2,
      marginRight: 2,
      minWidth: 100,
-     height: StyleSheet.hairlineWidth,
+     height: 2*StyleSheet.hairlineWidth,
      backgroundColor: '#EFEFF4',
    },
    bottomInfoStyle: {
@@ -195,7 +195,7 @@
      textAlign: 'left',
      backgroundColor: 'transparent',
      color: '#b2b2b2',
-
+     marginLeft: 8,
    },
  });
 
@@ -235,11 +235,12 @@
    renderBottomInfo: PropTypes.func,
    containerStyle: ViewPropTypes.style,
    introInfoStyle: ViewPropTypes.style,
-   bottomInfoStyle: ViewPropTypes.style,
-   mainTitleStyle: ViewPropTypes.style,
+   bottomInfoStyle: Text.propTypes.style,
+   mainTitleStyle: Text.propTypes.style,
    introImageStyle: ViewPropTypes.style,
-   infoStyle: ViewPropTypes.style,
+   infoStyle: Text.propTypes.style,
    imageslistStyle: ViewPropTypes.style,
+   divideStyle: ViewPropTypes.style,
    imageStyle: ViewPropTypes.style,
    avatarCarrier: PropTypes.object,
    introInfo: PropTypes.object,

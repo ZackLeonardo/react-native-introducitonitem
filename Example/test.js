@@ -10,21 +10,17 @@ import Introducitonitem from '@zdy/react-native-introducitonitem';
 export default class Test extends React.Component {
   render() {
     const IntroducitonItemProps = {
-      avatarCarrier: {
-        avatar: 'https://facebook.github.io/react/img/logo_og.png',
-        name: 'reactreara',
-      },
-      introInfo: {
-        mainTitle: 'xiao麦麦',
-        info: 'nice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girl',
-        detailImages: [
-          'https://facebook.github.io/react/img/logo_og.png',
-          'https://facebook.github.io/react/img/logo_og.png',
-          'https://facebook.github.io/react/img/logo_og.png',
-          'https://facebook.github.io/react/img/logo_og.png',
-          'https://facebook.github.io/react/img/logo_og.png',
-          'https://facebook.github.io/react/img/logo_og.png'],
-      },
+      avatar: 'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+      name: 'reactreara',
+      mainTitle: 'xiao麦麦',
+      info: 'nice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girlice girl',
+      detailImages: [
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg',
+        'https://img3.doubanio.com/img/fmadmin/large/31905.jpg'],
       bottomInfo: 'hahaha',
     }
     return (

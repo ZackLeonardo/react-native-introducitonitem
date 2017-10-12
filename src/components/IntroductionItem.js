@@ -32,7 +32,7 @@
    }
 
    renderAvatar() {
-     if (this.props.avatarCarrier.avatar) {
+     if (this.props.avatar) {
        const avatarProps = this.getInnerComponentProps();
        if (this.props.renderAvatar) {
          return this.props.renderAvatar(avatarProps);
@@ -43,18 +43,18 @@
    }
 
    renderIntroInfo() {
-     if (this.props.introInfo) {
+     if (this.props.mainTitle || this.props.info || this.props.detailImages) {
        const introInfoProps = this.getInnerComponentProps();
        if (this.props.renderIntroInfo) {
          return this.props.renderBubble(introInfoProps);
        }
        return (
          <View style={[styles.introInfoStyle, this.props.introInfoStyle]}>
-          {this.props.introInfo.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.introInfo.mainTitle}</Text> : null}
-          {this.props.introInfo.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.introInfo.info}</Text> : null}
-          {this.props.introInfo.detailImages ?
+          {this.props.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.mainTitle}</Text> : null}
+          {this.props.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.info}</Text> : null}
+          {this.props.detailImages ?
             <View style={[styles.imageslistStyle, this.props.imageslistStyle]}>
-              {this.props.introInfo.detailImages.map((image, i) => {
+              {this.props.detailImages.map((image, i) => {
                  if (i < this.props.detailImagesNum - 1) {
                    return <Image
                      key={image + i}
@@ -62,7 +62,7 @@
                      source={{uri: image}} />
                  }
                  if (i === this.props.detailImagesNum - 1) {
-                   if (this.props.introInfo.detailImages.length > this.props.detailImagesNum) {
+                   if (this.props.detailImages.length > this.props.detailImagesNum) {
                      return (
                        this.props.ellipsesImageUrl ?
                        <Image
@@ -70,7 +70,8 @@
                          style={[styles.introImageStyle,  this.props.introImageStyle]}
                          source={{uri: this.props.ellipsesImageUrl}}/>
                        :
-                        <Icon name="ellipsis-h" size={22} color="#666"/>
+                        <Icon
+                        key={i} name="ellipsis-h" size={22} color="#666"/>
                      );
                    } else {
                      return <Image
@@ -212,17 +213,13 @@
    imageslistStyle: {},
    introImageStyle: {},
    imageStyle: {},
-   avatarCarrier: {
-     avatar: null,
-     name: null,
-     // avatar: 'https://facebook.github.io/react/img/logo_og.png',
-     // name: 'reactreara',
-   },
-   introInfo: {
-     mainTitle: null,
-     info: null,
-     detailImages: [],
-   },
+   avatar: null,
+   name: null,
+   // avatar: 'https://facebook.github.io/react/img/logo_og.png',
+   // name: 'reactreara',
+   mainTitle: null,
+   info: null,
+   detailImages: [],
    detailImagesNum: 4,
    ellipsesImageUrl: null,
  };
@@ -242,8 +239,11 @@
    imageslistStyle: ViewPropTypes.style,
    divideStyle: ViewPropTypes.style,
    imageStyle: ViewPropTypes.style,
-   avatarCarrier: PropTypes.object,
-   introInfo: PropTypes.object,
+   avatar: PropTypes.string,
+   name: PropTypes.string,
+   mainTitle: PropTypes.string,
+   info: PropTypes.string,
+   detailImages: PropTypes.array,
    detailImagesNum: PropTypes.number,
    ellipsesImageUrl: PropTypes.string,
  };

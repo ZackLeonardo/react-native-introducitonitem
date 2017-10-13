@@ -163,10 +163,18 @@
    }
 
    getInnerComponentProps() {
-     const {containerStyle, bottomInfoStyle, ...props} = this.props;
-     return {
-       ...props,
-     }
+    //  const {containerStyle, bottomInfoStyle, ...props} = this.props;
+    //  return {
+    //    ...props,
+    //  }
+      return {
+        bottomInfo: this.props.bottomInfo,
+        avatar: this.props.avatar,
+        name: this.props.name,
+        mainTitle: this.props.mainTitle,
+        info: this.props.info,
+        onAvatarPress: this.props.onAvatarPress,
+      };
    }
  }
 
@@ -249,7 +257,6 @@
    renderIntroInfo: PropTypes.func,
    renderBottomInfo: PropTypes.func,
    bottomInfo: PropTypes.string,
-   renderBottomInfo: PropTypes.func,
    containerStyle: ViewPropTypes.style,
    introInfoStyle: ViewPropTypes.style,
    bottomInfoStyle: Text.propTypes.style,

@@ -24,6 +24,7 @@
 
      this._onPress = this._onPress.bind(this);
      this._onDetailImagesPress = this._onDetailImagesPress.bind(this);
+     this._onAvatarPress = this._onAvatarPress.bind(this);
    }
    render(){
      return (
@@ -54,6 +55,12 @@
      }
    }
 
+   _onAvatarPress(){
+     if (this.props.onAvatarPress) {
+       this.props.onAvatarPress(this.props);
+     }
+   }
+
    renderAvatar() {
      if (this.props.avatar) {
        const avatarProps = this.getInnerComponentProps();
@@ -63,6 +70,7 @@
        return (
          <Avatar
           {...avatarProps}
+          onPress={this._onAvatarPress}
           />
         );
      }
@@ -259,6 +267,8 @@
    detailImagesNum: PropTypes.number,
    ellipsesImageUrl: PropTypes.string,
    onItemPress: PropTypes.func,
+   onDetailImagesPress: PropTypes.func,
+   onAvatarPress: PropTypes.func,
  };
 
  module.exports = IntroductionItem;

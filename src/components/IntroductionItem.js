@@ -11,6 +11,7 @@
    StyleSheet,
    Text,
    Image,
+   TouchableOpacity,
  } from 'react-native';
  import PropTypes from 'prop-types';
  import Icon from 'react-native-vector-icons/FontAwesome';
@@ -18,17 +19,39 @@
  import Avatar from '@zdy/react-native-avatar';
 
  class IntroductionItem extends Component{
+   constructor(props){
+     super(props);
+
+     this._onPress = this._onPress.bind(this);
+     this._onDetailImagesPress = this._onDetailImagesPress.bind(this);
+   }
    render(){
      return (
-       <View style={styles.mainviewContainerStyle}>
-        <View style={[styles.containerStyle, this.props.containerStyle]}>
-          {this.renderAvatar()}
-          {this.renderIntroInfo()}
-        </View>
-        {this.renderDivide()}
-        {this.renderBottomInfo()}
-       </View>
+       <TouchableOpacity
+         disabled={this.props.onItemPress ? false : true}
+         onPress={this._onPress}>
+         <View style={styles.mainviewContainerStyle}>
+          <View style={[styles.containerStyle, this.props.containerStyle]}>
+            {this.renderAvatar()}
+            {this.renderIntroInfo()}
+          </View>
+          {this.renderDivide()}
+          {this.renderBottomInfo()}
+         </View>
+       </TouchableOpacity>
      );
+   }
+
+   _onPress(){
+     if (this.props.onItemPress){
+       this.props.onItemPress(this.props);
+     }
+   }
+
+   _onDetailImagesPress(){
+     if (this.props.onDetailImagesPress) {
+       this.props.onDetailImagesPress(this.props);
+     }
    }
 
    renderAvatar() {
@@ -37,7 +60,11 @@
        if (this.props.renderAvatar) {
          return this.props.renderAvatar(avatarProps);
        }
-       return <Avatar {...avatarProps}/>;
+       return (
+         <Avatar
+          {...avatarProps}
+          />
+        );
      }
      return null;
    }
@@ -46,42 +73,47 @@
      if (this.props.mainTitle || this.props.info || this.props.detailImages) {
        const introInfoProps = this.getInnerComponentProps();
        if (this.props.renderIntroInfo) {
-         return this.props.renderBubble(introInfoProps);
+         return this.props.renderIntroInfo(introInfoProps);
        }
        return (
          <View style={[styles.introInfoStyle, this.props.introInfoStyle]}>
           {this.props.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.mainTitle}</Text> : null}
           {this.props.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.info}</Text> : null}
           {this.props.detailImages ?
-            <View style={[styles.imageslistStyle, this.props.imageslistStyle]}>
-              {this.props.detailImages.map((image, i) => {
-                 if (i < this.props.detailImagesNum - 1) {
-                   return <Image
-                     key={image + i}
-                     style={[styles.introImageStyle,  this.props.introImageStyle]}
-                     source={{uri: image}} />
-                 }
-                 if (i === this.props.detailImagesNum - 1) {
-                   if (this.props.detailImages.length > this.props.detailImagesNum) {
-                     return (
-                       this.props.ellipsesImageUrl ?
-                       <Image
-                         key={image + i}
-                         style={[styles.introImageStyle,  this.props.introImageStyle]}
-                         source={{uri: this.props.ellipsesImageUrl}}/>
-                       :
-                        <Icon
-                        key={i} name="ellipsis-h" size={22} color="#666"/>
-                     );
-                   } else {
+            <TouchableOpacity
+              disabled={this.props.onDetailImagesPress ? false : true}
+              onPress={this._onDetailImagesPress}
+              >
+              <View style={[styles.imageslistStyle, this.props.imageslistStyle]}>
+                {this.props.detailImages.map((image, i) => {
+                   if (i < this.props.detailImagesNum - 1) {
                      return <Image
-                      key={image + i}
-                      style={[styles.introImageStyle,  this.props.introImageStyle]}
-                      source={{uri: image}}/>
+                       key={image + i}
+                       style={[styles.introImageStyle,  this.props.introImageStyle]}
+                       source={{uri: image}} />
                    }
-                 }
-               })}
-            </View>
+                   if (i === this.props.detailImagesNum - 1) {
+                     if (this.props.detailImages.length > this.props.detailImagesNum) {
+                       return (
+                         this.props.ellipsesImageUrl ?
+                         <Image
+                           key={image + i}
+                           style={[styles.introImageStyle,  this.props.introImageStyle]}
+                           source={{uri: this.props.ellipsesImageUrl}}/>
+                         :
+                          <Icon
+                          key={i} name="ellipsis-h" size={22} color="#666"/>
+                       );
+                     } else {
+                       return <Image
+                        key={image + i}
+                        style={[styles.introImageStyle,  this.props.introImageStyle]}
+                        source={{uri: image}}/>
+                     }
+                   }
+                 })}
+              </View>
+            </TouchableOpacity>
             :
             null
           }
@@ -201,27 +233,7 @@
  });
 
  IntroductionItem.defaultProps = {
-   renderAvatar: null,
-   renderIntroInfo: null,
-   renderBottomInfo: null,
-   bottomInfo: null,
-   containerStyle: {},
-   introInfoStyle: {},
-   bottomInfoStyle: {},
-   mainTitleStyle: {},
-   infoStyle: {},
-   imageslistStyle: {},
-   introImageStyle: {},
-   imageStyle: {},
-   avatar: null,
-   name: null,
-   // avatar: 'https://facebook.github.io/react/img/logo_og.png',
-   // name: 'reactreara',
-   mainTitle: null,
-   info: null,
-   detailImages: [],
    detailImagesNum: 4,
-   ellipsesImageUrl: null,
  };
 
  IntroductionItem.propTypes = {
@@ -246,6 +258,7 @@
    detailImages: PropTypes.array,
    detailImagesNum: PropTypes.number,
    ellipsesImageUrl: PropTypes.string,
+   onItemPress: PropTypes.func,
  };
 
  module.exports = IntroductionItem;

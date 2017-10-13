@@ -26,7 +26,12 @@ export default class Test extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Introducitonitem show bellow.</Text>
-        <Introducitonitem {...IntroducitonItemProps} />
+        <Introducitonitem
+          {...IntroducitonItemProps}
+          onAvatarPress={(props)=>{console.log('onAvatarPress' + props.name);}}
+          onItemPress={(props)=>{console.log('onItemPress' + props.mainTitle);}}
+          onDetailImagesPress={(props)=>{console.log('onDetailImagesPress' + props.detailImages);}}
+          />
       </View>
     );
   }

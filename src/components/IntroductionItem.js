@@ -162,19 +162,20 @@
      }
    }
 
-   getInnerComponentProps() {
-    //  const {containerStyle, bottomInfoStyle, ...props} = this.props;
-    //  return {
-    //    ...props,
-    //  }
-      return {
-        bottomInfo: this.props.bottomInfo,
-        avatar: this.props.avatar,
-        name: this.props.name,
-        mainTitle: this.props.mainTitle,
-        info: this.props.info,
-        onAvatarPress: this.props.onAvatarPress,
-      };
+  getInnerComponentProps() {
+    const {renderAvatar, renderIntroInfo, renderBottomInfo, containerStyle, introInfoStyle, bottomInfoStyle, mainTitleStyle, introImageStyle, infoStyle, imageslistStyle, divideStyle, imageStyle, detailImages, detailImagesNum, ellipsesImageUrl, onItemPress, onDetailImagesPress, ...props} = this.props;
+    return {
+     ...props,
+    }
+    
+    // return {
+    //   bottomInfo: this.props.bottomInfo,
+    //   avatar: this.props.avatar,
+    //   name: this.props.name,
+    //   mainTitle: this.props.mainTitle,
+    //   info: this.props.info,
+    //   onAvatarPress: this.props.onAvatarPress,
+    // };
    }
  }
 

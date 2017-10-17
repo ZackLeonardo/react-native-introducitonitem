@@ -27,6 +27,7 @@ export default class Test extends React.Component {
       <View style={styles.container}>
         <Text>Introducitonitem show bellow.</Text>
         <Introducitonitem
+          introImageStyle={{width: 80, height: 80}}
           {...IntroducitonItemProps}
           onAvatarPress={(props)=>{console.log('onAvatarPress' + props.name);}}
           onItemPress={(props)=>{console.log('onItemPress' + props.mainTitle);}}

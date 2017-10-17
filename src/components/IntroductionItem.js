@@ -12,6 +12,8 @@
    Text,
    Image,
    TouchableOpacity,
+   TouchableWithoutFeedback,
+   FlatList,
  } from 'react-native';
  import PropTypes from 'prop-types';
  import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,6 +27,7 @@
      this._onPress = this._onPress.bind(this);
      this._onDetailImagesPress = this._onDetailImagesPress.bind(this);
      this._onAvatarPress = this._onAvatarPress.bind(this);
+     this._renderImageListItem = this._renderImageListItem.bind(this);
    }
    render(){
      return (
@@ -33,11 +36,12 @@
          onPress={this._onPress}>
          <View style={styles.mainviewContainerStyle}>
           <View style={[styles.containerStyle, this.props.containerStyle]}>
-            {this.renderAvatar()}
-            {this.renderIntroInfo()}
+            {this._renderAvatar()}
+            {this._renderIntroInfo()}
           </View>
-          {this.renderDivide()}
-          {this.renderBottomInfo()}
+          {this.props.showLargeImage ? this._renderLargeImageList() : null}
+          {this._renderDivide()}
+          {this._renderBottomInfo()}
          </View>
        </TouchableOpacity>
      );
@@ -61,12 +65,12 @@
      }
    }
 
-   renderAvatar() {
+   _renderAvatar() {
+     if (this.props.renderAvatar) {
+       return this.props.renderAvatar(this.getInnerComponentProps());
+     }
      if (this.props.avatar) {
        const avatarProps = this.getInnerComponentProps();
-       if (this.props.renderAvatar) {
-         return this.props.renderAvatar(avatarProps);
-       }
        return (
          <Avatar
           {...avatarProps}
@@ -77,17 +81,16 @@
      return null;
    }
 
-   renderIntroInfo() {
+   _renderIntroInfo() {
+     if (this.props.renderIntroInfo) {
+       return this.props.renderIntroInfo(this.getInnerComponentProps());
+     }
      if (this.props.mainTitle || this.props.info || this.props.detailImages) {
-       const introInfoProps = this.getInnerComponentProps();
-       if (this.props.renderIntroInfo) {
-         return this.props.renderIntroInfo(introInfoProps);
-       }
        return (
          <View style={[styles.introInfoStyle, this.props.introInfoStyle]}>
           {this.props.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.mainTitle}</Text> : null}
           {this.props.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.info}</Text> : null}
-          {this.props.detailImages ?
+          {(!this.props.showLargeImage && this.props.detailImages) ?
             <TouchableOpacity
               disabled={this.props.onDetailImagesPress ? false : true}
               onPress={this._onDetailImagesPress}
@@ -125,57 +128,74 @@
             :
             null
           }
-
          </View>
        );
      }
+
      return null;
    }
 
-   renderDivide() {
+   _renderImageListItem(item, index){
+     return (
+       <TouchableWithoutFeedback>
+         <Image
+           key={item}
+           style={[styles.introImageStyle,  this.props.introImageStyle]}
+           source={{uri: item}} />
+       </TouchableWithoutFeedback>
+     );
+   }
+
+   _renderLargeImageList() {
+     if (this.props.renderLargeImageList){
+       return this.props.renderLargeImageList(this.getInnerComponentProps());
+     }
+     if (this.props.detailImages) {
+       let imageHeight = this.props.introImageStyle.height ? this.props.introImageStyle.height : styles.introImageStyle.height;
+       return (
+         <View style={[styles.imageslistStyle, {height: imageHeight}]}>
+
+           <FlatList
+            ref={ref => this.imageListRef = ref}
+            data={this.props.detailImages}
+            renderItem={({item, index}) => this._renderImageListItem(item, index)}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => item + index}
+            />
+
+         </View>
+
+       );
+     }
+   }
+
+   _renderDivide() {
      if (this.props.bottomInfo) {
        return <View style={[styles.divideStyle, this.props.divideStyle]}/>;
      }
      return null;
    }
 
-   renderBottomInfo(){
+   _renderBottomInfo(){
+     if (this.props.renderBottomInfo) {
+       return this.props.renderBottomInfo(this.getInnerComponentProps());
+     }
      if (this.props.bottomInfo){
-       const bottomInfoProps = this.getInnerComponentProps();
-       if (this.props.renderBottomInfo) {
-         return this.props.renderBottomInfo(bottomInfoProps);
-       }
        return (
          <Text style={[styles.bottomInfoStyle, this.props.bottomInfoStyle]}>
            {this.props.bottomInfo}
          </Text>
        );
      }
+     return null;
    }
 
-   renderIntroImages(detailImages) {
-     var length = detailImages.length;
-     if (length > this.props.detailImagesNum) {
-       for (let i = 0; i < this.props.detailImagesNum-2; i++) {
-
-       }
-     }
-   }
-
-  getInnerComponentProps() {
-    const {renderAvatar, renderIntroInfo, renderBottomInfo, containerStyle, introInfoStyle, bottomInfoStyle, mainTitleStyle, introImageStyle, infoStyle, imageslistStyle, divideStyle, imageStyle, detailImages, detailImagesNum, ellipsesImageUrl, onItemPress, onDetailImagesPress, ...props} = this.props;
-    return {
-     ...props,
-    }
-    
-    // return {
-    //   bottomInfo: this.props.bottomInfo,
-    //   avatar: this.props.avatar,
-    //   name: this.props.name,
-    //   mainTitle: this.props.mainTitle,
-    //   info: this.props.info,
-    //   onAvatarPress: this.props.onAvatarPress,
-    // };
+   getInnerComponentProps() {
+      const {renderAvatar, renderIntroInfo, renderBottomInfo, renderLargeImageList, containerStyle, introInfoStyle, bottomInfoStyle, mainTitleStyle, introImageStyle, infoStyle, imageslistStyle, divideStyle, detailImages, detailImagesNum, ellipsesImageUrl, onItemPress, onDetailImagesPress, ...props} = this.props;
+      return {
+        ...props,
+      }
    }
  }
 
@@ -251,11 +271,14 @@
 
  IntroductionItem.defaultProps = {
    detailImagesNum: 4,
+   showLargeImage: true,
  };
 
  IntroductionItem.propTypes = {
    renderAvatar: PropTypes.func,
    renderIntroInfo: PropTypes.func,
+   showLargeImage: PropTypes.bool,
+   renderLargeImageList: PropTypes.func,
    renderBottomInfo: PropTypes.func,
    bottomInfo: PropTypes.string,
    containerStyle: ViewPropTypes.style,
@@ -266,7 +289,6 @@
    infoStyle: Text.propTypes.style,
    imageslistStyle: ViewPropTypes.style,
    divideStyle: ViewPropTypes.style,
-   imageStyle: ViewPropTypes.style,
    avatar: PropTypes.string,
    name: PropTypes.string,
    mainTitle: PropTypes.string,

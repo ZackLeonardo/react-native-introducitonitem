@@ -88,8 +88,8 @@
      if (this.props.mainTitle || this.props.info || this.props.detailImages) {
        return (
          <View style={[styles.introInfoStyle, this.props.introInfoStyle]}>
-          {this.props.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]}>{this.props.mainTitle}</Text> : null}
-          {this.props.info ? <Text style={[styles.infoStyle, this.props.infoStyle]}>{this.props.info}</Text> : null}
+          {this.props.mainTitle ? <Text style={[styles.mainTitleStyle, this.props.mainTitleStyle]} numberOfLines={this.props.numberOfMainTitleLines}>{this.props.mainTitle}</Text> : null}
+          {this.props.info ? <Text style={[styles.infoStyle, this.props.infoStyle]} numberOfLines={this.props.numberOfInfoLines}>{this.props.info}</Text> : null}
           {(!this.props.showLargeImage && this.props.detailImages) ?
             <TouchableOpacity
               disabled={this.props.onDetailImagesPress ? false : true}
@@ -171,7 +171,7 @@
    }
 
    _renderDivide() {
-     if (this.props.bottomInfo) {
+     if (this.props.renderBottomInfo || this.props.bottomInfo) {
        return <View style={[styles.divideStyle, this.props.divideStyle]}/>;
      }
      return null;
@@ -204,6 +204,8 @@
      flexDirection: 'column',
      justifyContent: 'flex-start',
      alignItems: 'flex-start',
+     marginLeft: 0,
+     marginRight: 0,
    },
    containerStyle: {
      flexDirection: 'row',
@@ -270,6 +272,8 @@
  });
 
  IntroductionItem.defaultProps = {
+   numberOfMainTitleLines: 1,
+   numberOfInfoLines: 4,
    detailImagesNum: 4,
    showLargeImage: true,
  };
@@ -285,8 +289,10 @@
    introInfoStyle: ViewPropTypes.style,
    bottomInfoStyle: Text.propTypes.style,
    mainTitleStyle: Text.propTypes.style,
+   numberOfMainTitleLines: PropTypes.number,
    introImageStyle: ViewPropTypes.style,
    infoStyle: Text.propTypes.style,
+   numberOfInfoLines: PropTypes.number,
    imageslistStyle: ViewPropTypes.style,
    divideStyle: ViewPropTypes.style,
    avatar: PropTypes.string,

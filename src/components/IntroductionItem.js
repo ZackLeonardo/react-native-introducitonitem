@@ -137,7 +137,10 @@
 
    _renderImageListItem(item, index){
      return (
-       <TouchableWithoutFeedback>
+       <TouchableWithoutFeedback
+         disabled={this.props.onDetailImagesPress ? false : true}
+         onPress={this._onDetailImagesPress}
+         >
          <Image
            key={item}
            style={[styles.introImageStyle,  this.props.introImageStyle]}

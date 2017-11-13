@@ -2,9 +2,11 @@
 # yarn lockfile v1
 
 
-"@zdy/react-native-avatar@^1.0.2":
-  version "1.0.2"
-  resolved "http://localhost:4873/@zdy%2freact-native-avatar/-/react-native-avatar-1.0.2.tgz#b47b96562d6686e1fee6e193e3988badbfd53427"
+"@zdy/react-native-avatar@^1.1.0":
+  version "1.1.0"
+  resolved "http://localhost:4873/@zdy%2freact-native-avatar/-/react-native-avatar-1.1.0.tgz#dab874c982cb225eb05f1bcb4db6c72937a2b582"
+  dependencies:
+    react-native-lightbox "^0.7.0"
 
 ansi-regex@^2.0.0:
   version "2.1.1"
@@ -301,6 +303,12 @@ prop-types@^15.5.10:
 pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
+
+react-native-lightbox@^0.7.0:
+  version "0.7.0"
+  resolved "http://localhost:4873/react-native-lightbox/-/react-native-lightbox-0.7.0.tgz#e52b4d7fcc141f59d7b23f0180de535e35b20ec9"
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-vector-icons@^4.3.0:
   version "4.4.2"

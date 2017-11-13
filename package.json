@@ -1,6 +1,6 @@
 {
   "name": "@zdy/react-native-introducitonitem",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "react native listItem for introduction using in list",
   "main": "index.js",
   "author": "ZackLeonardo <maiz9088@icloud.com>",
@@ -10,7 +10,7 @@
     "url": "https://github.com/ZackLeonardo/react-native-introducitonitem"
   },
   "dependencies": {
-    "@zdy/react-native-avatar": "^1.0.2",
+    "@zdy/react-native-avatar": "^1.1.0",
     "react-native-vector-icons": "^4.3.0"
   }
 }
